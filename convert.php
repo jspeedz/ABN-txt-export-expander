@@ -9,6 +9,18 @@ if(!is_dir(__DIR__ . '/tmp')) {
     mkdir(__DIR__ . '/tmp');
 }
 
+
+if(is_array($_FILES['file']['error'])) {
+    if(count($_FILES['file']['error']) > 1) {
+        die('More than one file!!');
+    }
+    $_FILES['file']['name'] = $_FILES['file']['name'][0];
+    $_FILES['file']['tmp_name'] = $_FILES['file']['tmp_name'][0];
+    $_FILES['file']['type'] = $_FILES['file']['type'][0];
+    $_FILES['file']['size'] = $_FILES['file']['size'][0];
+    $_FILES['file']['error'] = $_FILES['file']['error'][0];
+}
+
 if($_FILES['file']['error'] !== UPLOAD_ERR_OK) {
     trigger_error('Upload fail, code: ' . $_FILES['file']['error'], E_USER_WARNING);
     exit;
@@ -106,11 +118,9 @@ if(is_uploaded_file($_FILES['file']['tmp_name'])) {
         header('Pragma: public');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Cache-Control: private', false);
+        header('Cache-Control: no-store, no-cache', false);
         header('Content-Transfer-Encoding: binary');
         header('Content-Type: text/csv');
-        header('content-type: text/csv');
-        header('X-test: text/csv');
         header('Content-Length: ' . strlen($file));
         header('Content-Disposition: attachment; filename=' . $newFileName);
         echo $file;
