@@ -70,8 +70,8 @@ if(is_uploaded_file($_FILES['file']['tmp_name'])) {
             $outputLine = [
                 'transactietype' => $transactionType,
                 'rekening' => trim($line[0]),
-                'tegenrekening' => $payeeAccount,
-                'tegenRekeninghouder' => $payeeAccountHolder,
+                'payee' => $payeeAccount,
+                'payeeName' => $payeeAccountHolder,
                 'valuta' => trim($line[1]),
                 'datum' => trim($line[2]),
                 'beginsaldo' => trim($line[3]),
@@ -79,7 +79,7 @@ if(is_uploaded_file($_FILES['file']['tmp_name'])) {
                 'uitvoerdatum' => trim($line[5]),
                 'bedrag' => trim($line[6]),
                 'beschrijving' => $description,
-                'opmerking' => $remark,
+                'memo' => $remark,
             ];
 
             return $outputLine;
